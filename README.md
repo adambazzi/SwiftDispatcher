@@ -1,66 +1,148 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Flask React Project
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This is the starter for the Flask React project.
 
-## About Laravel
+## Getting started
+1. Clone this repository (only this branch)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+2. Install dependencies
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+      ```bash
+      pipenv install -r requirements.txt
+      ```
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+3. Create a **.env** file based on the example with proper settings for your
+   development environment
 
-## Learning Laravel
+4. Make sure the SQLite3 database connection URL is in the **.env** file
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+5. This starter organizes all tables inside the `flask_schema` schema, defined
+   by the `SCHEMA` environment variable.  Replace the value for
+   `SCHEMA` with a unique name, **making sure you use the snake_case
+   convention**.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+6. Get into your pipenv, migrate your database, seed your database, and run your Flask app
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+   ```bash
+   pipenv shell
+   ```
 
-## Laravel Sponsors
+   ```bash
+   flask db upgrade
+   ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+   ```bash
+   flask seed all
+   ```
 
-### Premium Partners
+   ```bash
+   flask run
+   ```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+7. To run the React App in development, checkout the [README](./react-app/README.md) inside the `react-app` directory.
 
-## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Deployment through Render.com
 
-## Code of Conduct
+First, refer to your Render.com deployment articles for more detailed
+instructions about getting started with [Render.com], creating a production
+database, and deployment debugging tips.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+From the [Dashboard], click on the "New +" button in the navigation bar, and
+click on "Web Service" to create the application that will be deployed.
 
-## Security Vulnerabilities
+Look for the name of the application you want to deploy, and click the "Connect"
+button to the right of the name.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Now, fill out the form to configure the build and start commands, as well as add
+the environment variables to properly deploy the application.
 
-## License
+### Part A: Configure the Start and Build Commands
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Start by giving your application a name.
+
+Leave the root directory field blank. By default, Render will run commands from
+the root directory.
+
+Make sure the Environment field is set set to "Python 3", the Region is set to
+the location closest to you, and the Branch is set to "main".
+
+Next, add your Build command. This is a script that should include everything
+that needs to happen _before_ starting the server.
+
+For your Flask project, enter the following command into the Build field, all in
+one line:
+
+```shell
+# build command - enter all in one line
+npm install --prefix react-app &&
+npm run build --prefix react-app &&
+pip install -r requirements.txt &&
+pip install psycopg2 &&
+flask db upgrade &&
+flask seed all
+```
+
+This script will install dependencies for the frontend, and run the build
+command in the __package.json__ file for the frontend, which builds the React
+application. Then, it will install the dependencies needed for the Python
+backend, and run the migration and seed files.
+
+Now, add your start command in the Start field:
+
+```shell
+# start script
+gunicorn app:app
+```
+
+_If you are using websockets, use the following start command instead for increased performance:_
+
+`gunicorn --worker-class eventlet -w 1 app:app`
+
+### Part B: Add the Environment Variables
+
+Click on the "Advanced" button at the bottom of the form to configure the
+environment variables your application needs to access to run properly. In the
+development environment, you have been securing these variables in the __.env__
+file, which has been removed from source control. In this step, you will need to
+input the keys and values for the environment variables you need for production
+into the Render GUI.
+
+Click on "Add Environment Variable" to start adding all of the variables you
+need for the production environment.
+
+Add the following keys and values in the Render GUI form:
+
+- SECRET_KEY (click "Generate" to generate a secure secret for production)
+- FLASK_ENV production
+- FLASK_APP app
+- SCHEMA (your unique schema name, in snake_case)
+- REACT_APP_BASE_URL (use render.com url, located at top of page, similar to
+  https://this-application-name.onrender.com)
+
+In a new tab, navigate to your dashboard and click on your Postgres database
+instance.
+
+Add the following keys and values:
+
+- DATABASE_URL (copy value from Internal Database URL field)
+
+_Note: Add any other keys and values that may be present in your local __.env__
+file. As you work to further develop your project, you may need to add more
+environment variables to your local __.env__ file. Make sure you add these
+environment variables to the Render GUI as well for the next deployment._
+
+Next, choose "Yes" for the Auto-Deploy field. This will re-deploy your
+application every time you push to main.
+
+Now, you are finally ready to deploy! Click "Create Web Service" to deploy your
+project. The deployment process will likely take about 10-15 minutes if
+everything works as expected. You can monitor the logs to see your build and
+start commands being executed, and see any errors in the build process.
+
+When deployment is complete, open your deployed site and check to see if you
+successfully deployed your Flask application to Render! You can find the URL for
+your site just below the name of the Web Service at the top of the page.
+
+[Render.com]: https://render.com/
+[Dashboard]: https://dashboard.render.com/
