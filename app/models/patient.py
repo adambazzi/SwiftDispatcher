@@ -37,3 +37,5 @@ class Patient(db.Model):
     user = db.relationship('User', uselist=False, back_populates='patient', cascade="delete")
     # Define one-to-many relationship with appointments table
     appointments = db.relationship('Appointment', back_populates='patient')
+    # Define one-to-many relationship with medical_record table
+    medical_records = db.relationship('Medical_Record', back_populates='patient', cascade="delete")
