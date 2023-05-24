@@ -14,9 +14,6 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(40), nullable=False, unique=True, index=True)
     email = db.Column(db.String(255), nullable=False, unique=True, index=True)
     phone = db.Column(db.String(255), nullable=False, unique=True)
-    address = db.Column(db.String(150), nullable=False)
-    city = db.Column(db.String(150), nullable=False)
-    state = db.Column(db.String(2), nullable=False)
     lng = db.Column(db.Float,nullable=False)
     lat = db.Column(db.Float,nullable=False)
     first_name = db.Column(db.String(150), nullable=False)
@@ -25,12 +22,8 @@ class User(db.Model, UserMixin):
     hashed_password = db.Column(db.String(255), nullable=False)
 
 
-
-    # Relationship field
-    # Define a one-to-one relationship with doctor
-    doctor = db.relationship('Doctor', back_populates='user', uselist=False)
     # Define a one-to-one relationship with patient
-    patient = db.relationship('Patient', back_populates='user', uselist=False)
+    profile_picture = db.relationship('Profile_Picture', back_populates='user', uselist=False)
 
 
     # Check constraints for basic email and phone validation
