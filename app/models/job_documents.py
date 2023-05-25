@@ -29,4 +29,4 @@ class Job_Document(db.Model):
     # Define a many-to-one relationship with Jobs
     job = db.relationship('Job', backref='job_documents')
     # Define a one-to-one relationship with document categories
-    document_category = db.relationship('Document_Category', back_populates='job_document')
+    document_category = db.relationship('Document_Category', uselist=False, back_populates='job_document', cascade="delete")

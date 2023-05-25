@@ -41,6 +41,8 @@ class Job(db.Model):
     # Define a many-to-many relationship with Users
     users = db.relationship("Job",secondary=user_x_jobs, back_populates='jobs')
     # Define a many-to-one relationship with Clients
-    clients = db.relationship('Client', back_populates='jobs')
+    client = db.relationship('Client', back_populates='jobs')
     # Define a one-to-many relationship with Employee_Updates
     employee_updates = db.relationship('Employee_Update', backref='job')
+    # Define a one-to-many relationship with Job_Types
+    job_types = db.relationship('Job_Type', backref='job')

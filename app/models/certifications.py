@@ -1,9 +1,9 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from datetime import datetime
-
+from user_x_certification import user_x_certifications
 class Certifications(db.Model):
     """
-    Certifications model representing doctors in the application.
+    Certifications model representing certifications in the application.
     """
     __tablename__ = 'certifications'
 
@@ -23,3 +23,5 @@ class Certifications(db.Model):
     )
 
     # Define Relationships
+    # Define a many-to-many relationship with Jobs
+    users = db.relationship("User",secondary=user_x_certifications, back_populates='users')

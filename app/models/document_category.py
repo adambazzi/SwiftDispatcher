@@ -23,5 +23,5 @@ class Document_Category(db.Model):
     )
 
     # Define Relationships
-    # Define a one-to-many relationship with Documents
-    job_document = db.relationship('Job_Document', back_populates='document_category', cascade="delete")
+    # Define a one-to-one relationship with Documents
+    job_document = db.relationship('Job_Document', uselist=False, back_populates='document_category', cascade="delete")

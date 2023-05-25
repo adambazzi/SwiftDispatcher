@@ -30,4 +30,4 @@ class Client(db.Model):
 
     # Define Relationships
     # Define a one-to-many relationship with jobs
-    jobs = db.relationship('Job', back_populates='clients')
+    jobs = db.relationship('Job', back_populates='client')
