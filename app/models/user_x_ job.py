@@ -4,7 +4,7 @@ from datetime import datetime
 
 
 business_categories = db.Table(
-    'user_jobs',
+    'user_x_jobs',
     db.Model.metadata,
     db.Column('users', db.Integer, db.ForeignKey(add_prefix_for_prod('users.id'))),
     db.Column('jobs', db.Integer, db.ForeignKey(add_prefix_for_prod('jobs.id'))),
