@@ -25,4 +25,4 @@ class Employee_Update(db.Model):
 
     # Define Relationships
     # Define a many-to-one relationship with Jobs
-    job = db.relationship('Job', backref='employee_updates')
+    job = db.relationship('Job', back_populates='employee_updates')

@@ -3,6 +3,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.schema import CheckConstraint
 from flask_login import UserMixin
 from .user_x_job import user_x_jobs
+from .user_x_certification import user_x_certifications
 
 
 class User(db.Model, UserMixin):
@@ -61,5 +62,14 @@ class User(db.Model, UserMixin):
         }
 
     # Define Relationships
+
     # Define a many-to-many relationship with Jobs
     jobs = db.relationship("Job",secondary=user_x_jobs, back_populates='users')
+    # Define a many-to-many relationship with Certifications
+    certifications = db.relationship("Job",secondary=user_x_certifications, back_populates='users')
+    # Define a one-to-many relationship with Jobs for project manager
+    jobs = db.relationship('Job', back_populates='project_manager')
+    # Define a one-to-many relationship with user for Off Time Requests
+    off_time_requests = db.relationship('Off_Time_Request', back_populates='user')
+    # Define a one-to-one relationship with user for Profile Picture
+    profile_picture = db.relationship('Profile_Picture', back_populates='user')

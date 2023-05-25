@@ -1,6 +1,7 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from datetime import datetime
 from .user_x_job import user_x_jobs
+from .job_x_job_type import job_x_job_types
 
 class Job(db.Model):
     """
@@ -39,10 +40,14 @@ class Job(db.Model):
 
     # Define Relationships
     # Define a many-to-many relationship with Users
-    users = db.relationship("Job",secondary=user_x_jobs, back_populates='jobs')
+    users = db.relationship("User",secondary=user_x_jobs, back_populates='jobs')
     # Define a many-to-one relationship with Clients
     client = db.relationship('Client', back_populates='jobs')
     # Define a one-to-many relationship with Employee_Updates
     employee_updates = db.relationship('Employee_Update', backref='job')
-    # Define a one-to-many relationship with Job_Types
-    job_types = db.relationship('Job_Type', backref='job')
+    # Define a many-to-many relationship with Job_Types
+    job_types = db.relationship("Job_Type",secondary=job_x_job_types, back_populates='jobs')
+    # Define a one-to-many relationship with Job_Documents
+    job_documents = db.relationship('Job_Document', backref='job')
+    # Define a many-to-one relationship with Users for project manager
+    project_manager = db.relationship('User', foreign_keys=[project_manager_id])

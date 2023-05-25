@@ -24,4 +24,4 @@ class Certifications(db.Model):
 
     # Define Relationships
     # Define a many-to-many relationship with Jobs
-    users = db.relationship("User",secondary=user_x_certifications, back_populates='users')
+    users = db.relationship("User",secondary=user_x_certifications, back_populates='certifications')
