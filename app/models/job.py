@@ -12,8 +12,8 @@ class Job(db.Model):
         __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    project_manager_id = db.Column(db.String(100), nullable=False)
-    client_id = db.Column(db.String(100), nullable=False)
+    project_manager_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
+    client_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('clients.id')), nullable=False)
     job_number = db.Column(db.String(100), nullable=False)
     project_info = db.Column(db.Text, nullable=True)
     address = db.Column(db.String(200), nullable=False)
@@ -42,3 +42,5 @@ class Job(db.Model):
     users = db.relationship("Job",secondary=user_jobs, back_populates='jobs')
     # Define a many-to-one relationship with Clients
     clients = db.relationship('Client', back_populates='jobs')
+    # Define a one-to-many relationship with Employee_Updates
+    employee_updates = db.relationship('Employee_Update', backref='job')
