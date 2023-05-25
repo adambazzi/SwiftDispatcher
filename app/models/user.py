@@ -2,6 +2,7 @@ from .db import db, environment, SCHEMA, add_prefix_for_prod
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.schema import CheckConstraint
 from flask_login import UserMixin
+from .user_job import user_jobs
 
 
 class User(db.Model, UserMixin):
@@ -58,3 +59,7 @@ class User(db.Model, UserMixin):
             'username': self.username,
             'email': self.email,
         }
+
+    # Define Relationships
+    # Define a many-to-many relationship with Jobs
+    jobs = db.relationship("Job",secondary=user_jobs, back_populates='users')
