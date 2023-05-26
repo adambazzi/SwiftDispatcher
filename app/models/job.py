@@ -2,6 +2,8 @@ from .db import db, environment, SCHEMA, add_prefix_for_prod
 from datetime import datetime
 from .user_x_job import user_x_jobs
 from .job_x_job_type import job_x_job_types
+from sqlalchemy.dialects.postgresql import ARRAY
+
 
 class Job(db.Model):
     """
@@ -25,10 +27,11 @@ class Job(db.Model):
     lng = db.Column(db.Float, nullable=True)
     start_date = db.Column(db.DateTime, nullable=True)
     end_date = db.Column(db.DateTime, nullable=True)
-    job_status = db.Column(db.String(50), default='pending')
+    job_status = db.Column(db.String(50), default='Pending')
     contact_name = db.Column(db.String(200), nullable=True)
     contact_number = db.Column(db.String(20), nullable=True)
     project_manager_name = db.Column(db.String(200), nullable=False)
+
 
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(
