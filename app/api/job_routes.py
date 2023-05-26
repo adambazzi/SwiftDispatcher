@@ -7,6 +7,7 @@ from sqlalchemy.exc import IntegrityError
 
 job_routes = Blueprint('jobs', __name__)
 
+# GET route to retrieve all jobs and clients
 @job_routes.route('/job-client', methods=['GET'])
 def get_job_client_info():
     # Use joinedload() to perform an eager load of Job and Client
@@ -45,28 +46,30 @@ def get_job_client_info():
 
     return jsonify(data), 200
 
+# POST route to create a new job
 @job_routes.route('/job', methods=['POST'])
 def create_job():
     data = request.get_json()
 
     new_job = Job(
-        project_manager_id=data.get('project_manager_id'),
-        client_id=data.get('client_id'),
-        job_number=data.get('job_number'),
-        project_info=data.get('project_info'),
+        project_manager_id=data.get('projectManagerId'),
+        client_id=data.get('clientId'),
+        job_number=data.get('jobNumber'),
+        project_info=data.get('projectInfo'),
         address=data.get('address'),
         city=data.get('city'),
         state=data.get('state'),
-        zip_code=data.get('zip_code'),
+        zip_code=data.get('zipCode'),
         lat=data.get('lat'),
         lng=data.get('lng'),
-        start_date=data.get('start_date'),
-        end_date=data.get('end_date'),
-        job_status=data.get('job_status', 'Pending'),
-        contact_name=data.get('contact_name'),
-        contact_number=data.get('contact_number'),
-        project_manager_name=data.get('project_manager_name')
+        start_date=data.get('startDate'),
+        end_date=data.get('endDate'),
+        job_status=data.get('jobStatus', 'Pending'),
+        contact_name=data.get('contactName'),
+        contact_number=data.get('contactNumber'),
+        project_manager_name=data.get('projectManagerName')
     )
+
 
     db.session.add(new_job)
     try:

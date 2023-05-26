@@ -16,8 +16,6 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(40), nullable=False, unique=True, index=True)
     email = db.Column(db.String(255), nullable=False, unique=True, index=True)
     phone = db.Column(db.String(255), nullable=False, unique=True)
-    lng = db.Column(db.Float,nullable=False)
-    lat = db.Column(db.Float,nullable=False)
     first_name = db.Column(db.String(150), nullable=False)
     last_name = db.Column(db.String(150), nullable=False)
     admin = db.Column(db.Boolean, nullable=False, default=False)
