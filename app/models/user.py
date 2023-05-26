@@ -57,6 +57,7 @@ class User(db.Model, UserMixin):
             'id': self.id,
             'username': self.username,
             'email': self.email,
+            'certifications': [certification.to_dict() for certification in self.certifications]
         }
 
     # Define Relationships

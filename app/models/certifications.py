@@ -21,6 +21,11 @@ class Certifications(db.Model):
         onupdate=datetime.utcnow,
         nullable=False
     )
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'cert_name': self.cert_name,
+        }
 
     # Define Relationships
     # Define a many-to-many relationship with Jobs
