@@ -1,6 +1,6 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from datetime import datetime
-from job_x_job_type import job_x_job_types
+
 class Job_Type(db.Model):
     """
     Job_Type model representing job types in the application.
@@ -24,4 +24,4 @@ class Job_Type(db.Model):
 
     # Define Relationships
     # Define a many-to-many relationship with Jobs
-    jobs = db.relationship("Job",secondary=job_x_job_types, back_populates='job_types')
+    jobs = db.relationship("Job",secondary='job_x_job_types', back_populates='job_types')

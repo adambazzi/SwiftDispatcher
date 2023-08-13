@@ -28,14 +28,11 @@ function App() {
       {isLoaded && (
         <Switch>
           <Route exact path="/login">
-          {isAuthenticated ? (
-            <Redirect to="/" />
-          ) : (
-            <LoginFormPage />
-          )}
-          </Route>
-          <Route path="/login" >
-            <LoginFormPage />
+            {isAuthenticated ? (
+              <Redirect to="/" />
+            ) : (
+              <LoginFormPage />
+            )}
           </Route>
           <Route path="/signup">
             <SignupFormPage />
