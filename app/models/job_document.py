@@ -13,6 +13,8 @@ class Job_Document(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     job_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('jobs.id')), nullable=False)
+    document_category_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('document_categories.id')), nullable=False)
+
 
     category = db.Column(db.String(200), nullable=False)
     address = db.Column(db.String, nullable=False)
@@ -27,6 +29,6 @@ class Job_Document(db.Model):
 
     # Define Relationships
     # Define a many-to-one relationship with Jobs
-    job = db.relationship('Job', backref='job_documents')
+    job = db.relationship('Job', back_populates='job_documents')
     # Define a one-to-one relationship with document categories
     document_category = db.relationship('Document_Category', uselist=False, back_populates='job_document', cascade="delete")

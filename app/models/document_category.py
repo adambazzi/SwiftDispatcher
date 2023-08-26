@@ -14,6 +14,7 @@ class Document_Category(db.Model):
     default_option = db.Column(db.Boolean, nullable=False)
     name = db.Column(db.String, nullable=False)
 
+
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(
         db.DateTime,
